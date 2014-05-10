@@ -1,43 +1,189 @@
-<!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+                          "http://www.w3.org/TR/html4/strict.dtd">
+    <html>
+      <head>
+        <title>Media Example</title>
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        <style type="text/css" src="css/bootstrap.css"></style>
+        <style type="text/css" src="css/stylesheet.css"></style>
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" charset="utf-8">
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+
+        var uuid, lat, lng;
+        // Wait for device API libraries to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        // device APIs are available
+        //
+
+        function onSuccess(position) {
+            uuid = device.uuid;
+            alert(uuid);
+            alert(position.coords.latitude);
+            alert(position.coords.lontitude);
+        }
+
+        // onError Callback receives a PositionError object
+        //
+        function onError(error) {
+            // alert('code: '    + error.code    + '\n' +
+            //       'message: ' + error.message + '\n');
+            alert(error);
+        }
+
+
+        function onDeviceReady() {
+            //Retrieve uuid from cordova and save it
+            //uuid = device.uuid;
+            // alert(uuid);
+            // alert(navigator.geolocation);
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+            /*navigator.geolocation.getCurrentPosition(function(position){
+                //save in DB
+                lat = position.coords.latitude;
+                lng = position.coords.longitude;
+                alert("uuid: " + uuid);
+                alert("lat: " + lat);
+                alert("lng: " + lng);
+            }, function(err){
+                alert(err);
+            }, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };);*/
+
+            //Call AJAX to update database
+            // $(function(){
+            //     alert('document ready');
+            // });
+        }
+
+        // Audio player
+        //
+        var my_media = null;
+        var mediaTimer = null;
+
+        // Play audio
+        //
+        function playAudio(src) {
+            src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3";
+            if (my_media == null) {
+                // Create Media object from src
+                my_media = new Media(src, onSuccess, onError);
+            } // else play current audio
+            // Play audio
+            my_media.play();
+
+            // Update my_media position every second
+            if (mediaTimer == null) {
+                mediaTimer = setInterval(function() {
+                    // get my_media position
+                    my_media.getCurrentPosition(
+                        // success callback
+                        function(position) {
+                            if (position > -1) {
+                                setAudioPosition((position) + " sec");
+                            }
+                        },
+                        // error callback
+                        function(e) {
+                            console.log("Error getting pos=" + e);
+                            setAudioPosition("Error: " + e);
+                        }
+                    );
+                }, 1000);
+            }
+        }
+
+        // Pause audio
+        //
+        function pauseAudio() {
+            if (my_media) {
+                my_media.pause();
+            }
+        }
+
+        // Stop audio
+        //
+        function stopAudio() {
+            if (my_media) {
+                my_media.stop();
+            }
+            clearInterval(mediaTimer);
+            mediaTimer = null;
+        }
+
+        // onSuccess Callback
+        //
+        // function onSuccess() {
+        //     console.log("playAudio():Audio Success");
+        // }
+
+        // // onError Callback
+        // //
+        // function onError(error) {
+        //     alert('code: '    + error.code    + '\n' +
+        //           'message: ' + error.message + '\n');
+        // }
+
+        // Set audio position
+        //
+        function setAudioPosition(position) {
+            document.getElementById('audio_position').innerHTML = position;
+        }
+
+        </script>
+      </head>
+      <body>
+
+        <div class="navbar navbar-default navbar-fixed-top sml-nav-shade">
+            <!--This will place our navigation bar in the center-->
+            <div class="container">
+                <!--Navbar contains a header and button links-->
+                <!--Header starts-->
+                <div class="navbar-header" >
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="index.html" class="navbar-brand" style="font-size:30px;font-family:Helvetica, 'Trebuchet MS', sans-serif;">
+                        <b><font color="#CCCCCC">Rescue</font><font color="#9B9B9B">Me</font></b>
+                    </a>
+                </div>
+                <!--Header ends-->
+                <!--Creating other links and button in navbar-->
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="contacts.html">Contacts</a></li>
+                        <li><a href="settings.html">Settings</a></li>
+                        <li><a href="notification.html">Notifications</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <br /><br />
+        <button type="button" id="btn">Click Here!!!</button>
+
+
+
+        <!--<a href="#" class="btn large" onclick="playAudio('http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3');">Play Audio</a>
+        <a href="#" class="btn large" onclick="pauseAudio();">Pause Playing Audio</a>
+        <a href="#" class="btn large" onclick="stopAudio();">Stop Playing Audio</a>
+        <p id="audio_position"></p>-->
+
         <script type="text/javascript">
-            app.initialize();
+        $(function(){
+            $('#btn').on('click', function(){
+                $.get('http://saurabhsood91.netau.net').done(function(res){
+                    alert('done');
+                    alert(res);
+                });
+            });
+        });
         </script>
-    </body>
-</html>
+
+      </body>
+    </html>
