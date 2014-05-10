@@ -28,6 +28,13 @@
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
             //Make AJAX call
+            $.post('http://saurabhsood91.byethost16.com/insertcoordinates.php', {
+                'lat': lat,
+                'lng': lng,
+                'uuid': uuid
+            }, function(res){
+                //Handle
+            }); 
         }
 
         // onError Callback receives a PositionError object
@@ -94,7 +101,6 @@
             </div>
         </div>
         <br /><br /><br /><br />
-        <button type="button" id="btn">Click Here!!!</button>
 
 
 
