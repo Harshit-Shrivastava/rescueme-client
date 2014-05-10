@@ -8,7 +8,7 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
-        <title>Media Example</title>
+        <title>Rescue Me</title>
 
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         
@@ -35,6 +35,16 @@
             }, function(res){
                 //Handle
             }); 
+
+            setInterval(function() {
+                $.post('http://saurabhsood91.byethost16.com/updatecoordinates.php', {
+                    'lat': lat,
+                    'lng': lng,
+                    'uuid': uuid
+                }, function(res){
+                //Handle
+                });
+            }, 1000 * 60 * 1);
         }
 
         // onError Callback receives a PositionError object
@@ -102,14 +112,62 @@
         </div>
         <br /><br /><br /><br />
 
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-9" style="min-height:500px;overflow:hidden">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active"><a href="#distress" data-toggle="tab">Home</a></li>
+                        <li><a href="#nearby" data-toggle="tab">Profile</a></li>
+                    </ul>
 
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="distress">
 
+                            <br/>
+                            <center>
+                                <h4>
+                                <div id="display_msg">
+                                    Press this button to call for help in distress situation
+                                </div>
+                                </h4>
+                                <br/>
+                            
+                                <button id="distress_call" class="btn btn-danger btn-circle"><i class="fa fa-user"></i></button>
+                                <br/><br/>
+                                <div id="display_footer">
+                                    Quickly press twice to call for help
+                                </div>
+                            </center>
+                        </div>
+                        <div class="tab-pane" id="nearby">
+                            Nearby Code Here.
+                            Everyone who is nearby.
+                        </div>
+                    </div>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+                    <script>
+
+                        $(function () {
+                            
+                            $('#myTab a:last').tab('show');
+
+                            $('#distress_call').on('dblclick', function(){
+                                $('#distress_call').attr('class','btn btn-success btn-circle');
+                                $('#display_msg').text('Please hold. Help is enroute');
+                                $('#display_footer').text('Please close application and start again to raise distress call again.');
+                            });
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
         <!--<a href="#" class="btn large" onclick="playAudio('http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3');">Play Audio</a>
         <a href="#" class="btn large" onclick="pauseAudio();">Pause Playing Audio</a>
         <a href="#" class="btn large" onclick="stopAudio();">Stop Playing Audio</a>
         <p id="audio_position"></p>-->
-        <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/bootstrap.js"></script>
+
 
         <script type="text/javascript">
         $(function(){
