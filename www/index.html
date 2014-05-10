@@ -11,7 +11,6 @@
         <title>Rescue Me</title>
 
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-        
         <script type="text/javascript" charset="utf-8">
 
 
@@ -146,6 +145,7 @@
                     </div>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
+                <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
                     <script>
 
                         $(function () {
@@ -154,18 +154,34 @@
 
                             $('#distress_call').on('dblclick', function(){
                                 $('#distress_call').attr('class','btn btn-success btn-circle');
-                                $.get('http://saurabhsood91.netau.net/send_distress_msg').done(function(res){
-                                    foreach(id in res)
-                                    {
+                                // $.get('http://saurabhsood91.netau.net/').done(function(res){
+                                //     foreach(id in res)
+                                //     {
+                                //         var conn = peer.connect(id);
+                                //         conn.on('open', function(){
+                                //         conn.send('hi!');
+                                //         });
+                                //     }//alert('done');
+                                    
+                                // });
+                                getUsers();
+                                findUsersInCloseVicinity();
+                                var peer = new Peer(uuid, {key: 'myapikey'}); 
+                                foreach(id in users_in_close_vicinity) {
                                         var conn = peer.connect(id);
                                         conn.on('open', function(){
                                         conn.send('hi!');
                                         });
-                                    }//alert('done');
-                                    
+                                }
+                                peer.on('connection', function(conn) {
+                                    conn.on('data', function(data){
+                                    // Will print 'hi!'
+                                        alert(data);
+                                    });
                                 });
                                 $('#display_msg').text('Please hold. Help is enroute');
                                 $('#display_footer').text('Please close application and start again to raise distress call again.');
+
                             });
                         });
                     </script>
@@ -173,22 +189,7 @@
                 </div>
             </div>
         </div>
-        <!--<a href="#" class="btn large" onclick="playAudio('http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3');">Play Audio</a>
-        <a href="#" class="btn large" onclick="pauseAudio();">Pause Playing Audio</a>
-        <a href="#" class="btn large" onclick="stopAudio();">Stop Playing Audio</a>
-        <p id="audio_position"></p>-->
 
-
-        <script type="text/javascript">
-        $(function(){
-            $('#btn').on('click', function(){
-                $.get('http://saurabhsood91.netau.net').done(function(res){
-                    //alert('done');
-                    alert(res);
-                });
-            });
-        });
-        </script>
 
       </body>
     </html>
