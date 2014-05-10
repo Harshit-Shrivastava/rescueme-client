@@ -1,5 +1,5 @@
 var user_list = [];
-
+var users_in_close_vicinity = [];
 if (typeof(Number.prototype.toRadians) === "undefined") {
   Number.prototype.toRadians = function() {
     return this * Math.PI / 180;
@@ -31,5 +31,14 @@ function isWithinRange(lat1, lng1, lat2, lng2) {
 		return true;
 	} else {
 		return false;
+	}
+}
+
+function findUsersInCloseVicinity() {
+	var i = 0;
+	for(i = 0; i < user_list.length; i++) {
+		if(isWithinRange(lat, lng, user_list[i].lat, user_list[i].long)) {
+			users_in_close_vicinity.push(user_list[i]);
+		}
 	}
 }
