@@ -2,13 +2,16 @@
                           "http://www.w3.org/TR/html4/strict.dtd">
     <html>
       <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
         <title>Media Example</title>
 
-        <style type="text/css" src="css/bootstrap.css"></style>
-        <style type="text/css" src="css/stylesheet.css"></style>
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-        <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/bootstrap.js"></script>
+        
         <script type="text/javascript" charset="utf-8">
 
 
@@ -63,7 +66,7 @@
         </script>
       </head>
       <body>
-
+        <!--Navbar starts here-->
         <div class="navbar navbar-default navbar-fixed-top sml-nav-shade">
             <!--This will place our navigation bar in the center-->
             <div class="container">
@@ -90,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <br /><br />
+        <br /><br /><br /><br />
         <button type="button" id="btn">Click Here!!!</button>
 
 
@@ -99,12 +102,14 @@
         <a href="#" class="btn large" onclick="pauseAudio();">Pause Playing Audio</a>
         <a href="#" class="btn large" onclick="stopAudio();">Stop Playing Audio</a>
         <p id="audio_position"></p>-->
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
 
         <script type="text/javascript">
         $(function(){
             $('#btn').on('click', function(){
                 $.get('http://saurabhsood91.netau.net').done(function(res){
-                    alert('done');
+                    //alert('done');
                     alert(res);
                 });
             });
