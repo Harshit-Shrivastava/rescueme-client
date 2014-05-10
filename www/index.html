@@ -146,14 +146,10 @@
                     </div>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
-                <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
                     <script>
-
                         $(function () {
-                            
                             $('#myTab a:last').tab('show');
-
-                            $('#distress_call').on('dblclick', function(){
+                            $('#distress_call').on('click', function(){
                                 $('#distress_call').attr('class','btn btn-success btn-circle');
                                 uuid = device.uuid;
                                 var lat = position.coords.latitude;
