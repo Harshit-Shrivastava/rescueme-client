@@ -64,6 +64,16 @@
 	border-left: 4px solid transparent;
 }
 
+.btn-circle {
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  padding: 25px 0;
+  font-size: 20px;
+  line-height: 1.42;
+  border-radius: 100px;
+}
+
 .box
 {
 	border: 1px solid #C2C2C2; 
