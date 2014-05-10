@@ -11,6 +11,7 @@
         <title>Rescue Me</title>
 
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/scripts.js"></script>
         <script type="text/javascript" charset="utf-8">
 
 
@@ -154,31 +155,34 @@
 
                             $('#distress_call').on('dblclick', function(){
                                 $('#distress_call').attr('class','btn btn-success btn-circle');
-                                // $.get('http://saurabhsood91.netau.net/').done(function(res){
-                                //     foreach(id in res)
-                                //     {
-                                //         var conn = peer.connect(id);
+                                uuid = device.uuid;
+                                var lat = position.coords.latitude;
+                                var lng = position.coords.longitude;
+                                $.post('http://saurabhsood91.netau.net/express_distress.php',{
+                                        'lat': lat,
+                                        'lng': lng,
+                                        'uuid': uuid
+                                    }, function(res){
+                                      //Handle
+                                }); 
+                                // getUsers();
+                                // findUsersInCloseVicinity();
+                                // //alert(users_in_close_vicinity);
+                                // var peer = new Peer(uuid, {key: '4h4nz22i7b1vpldi'}); 
+                                // //alert(peer);
+                                // foreach(item in users_in_close_vicinity) {
+                                //         var conn = peer.connect(item);
+                                //         alert(conn);
                                 //         conn.on('open', function(){
                                 //         conn.send('hi!');
                                 //         });
-                                //     }//alert('done');
-                                    
+                                // }
+                                // peer.on('connection', function(conn) {
+                                //     conn.on('data', function(data){
+                                //     // Will print 'hi!'
+                                //         alert(data);
+                                //     });
                                 // });
-                                getUsers();
-                                findUsersInCloseVicinity();
-                                var peer = new Peer(uuid, {key: 'myapikey'}); 
-                                foreach(id in users_in_close_vicinity) {
-                                        var conn = peer.connect(id);
-                                        conn.on('open', function(){
-                                        conn.send('hi!');
-                                        });
-                                }
-                                peer.on('connection', function(conn) {
-                                    conn.on('data', function(data){
-                                    // Will print 'hi!'
-                                        alert(data);
-                                    });
-                                });
                                 $('#display_msg').text('Please hold. Help is enroute');
                                 $('#display_footer').text('Please close application and start again to raise distress call again.');
 
