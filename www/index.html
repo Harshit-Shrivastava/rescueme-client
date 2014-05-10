@@ -116,8 +116,8 @@
             <div class="row">
                 <div class="col-xs-12 col-md-9" style="min-height:500px;overflow:hidden">
                     <ul class="nav nav-tabs" id="myTab">
-                        <li class="active"><a href="#distress" data-toggle="tab">Home</a></li>
-                        <li><a href="#nearby" data-toggle="tab">Profile</a></li>
+                        <li class="active"><a href="#distress" data-toggle="tab"><h3>Distress</h3></a></li>
+                        <li><a href="#nearby" data-toggle="tab"><h3>Nearby</h3></a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -154,6 +154,16 @@
 
                             $('#distress_call').on('dblclick', function(){
                                 $('#distress_call').attr('class','btn btn-success btn-circle');
+                                $.get('http://saurabhsood91.netau.net/send_distress_msg').done(function(res){
+                                    foreach(id in res)
+                                    {
+                                        var conn = peer.connect(id);
+                                        conn.on('open', function(){
+                                        conn.send('hi!');
+                                        });
+                                    }//alert('done');
+                                    
+                                });
                                 $('#display_msg').text('Please hold. Help is enroute');
                                 $('#display_footer').text('Please close application and start again to raise distress call again.');
                             });
